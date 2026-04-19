@@ -12,7 +12,7 @@ COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Build the Go server
-FROM golang:1.21-alpine AS backend-builder
+FROM golang:alpine AS backend-builder
 WORKDIR /app
 # Copy Go module files and download dependencies (if you have go.mod/go.sum initialized)
 COPY go.mod go.sum* ./
@@ -31,6 +31,9 @@ COPY --from=backend-builder /app/server .
 # Copy the built React static files from the frontend-builder stage
 # main.go expects them to be in ./frontend/dist
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
+
+# Copy the words list into the container
+COPY words.txt .
 
 EXPOSE 3333
 
