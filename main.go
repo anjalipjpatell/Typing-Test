@@ -14,9 +14,9 @@ import (
 const port = "3333"
 
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, Typing Test!")
-	})
+	// Serve static files from frontend/dist directory
+	fs := http.FileServer(http.Dir("./frontend/dist"))
+	http.Handle("/", fs)
 
 	srv := &http.Server{
 		Addr: fmt.Sprintf(":%s", port),
