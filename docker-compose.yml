@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  typing-test:
+    build: .
+    ports:
+      - "3333:3333"
+    container_name: typing-test-app
